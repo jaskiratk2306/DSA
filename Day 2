@@ -1,0 +1,85 @@
+Q1. Rotate Array (leetcode - 189)
+
+class Solution {
+public:
+    void rotate(vector<int>& nums, int k) {
+
+        vector<int> temp;
+        int n = nums.size();
+        k=k%n;
+  
+        for(int i=n-k;i<n;i++){
+            temp.push_back(nums[i]);
+        }
+
+        for(int i=0;i<n-k;i++){
+            temp.push_back(nums[i]);
+        }
+        
+         for(int i=0;i<n;i++){
+            nums[i] = temp[i];
+        }
+        
+    }
+};
+
+
+Q2.Move Zeroes (Leetcode - 283)
+
+class Solution {
+public:
+    void moveZeroes(vector<int>& nums) {
+        vector<int>temp;
+        int count=0;
+
+        for(int i=0;i<nums.size();i++){
+            if(nums[i]!=0)temp.push_back(nums[i]);
+            else count++;
+        }
+
+        for(int i=0;i<temp.size();i++){
+            nums[i]=temp[i];
+        }
+
+        for(int i=temp.size();i<nums.size();i++){
+            nums[i]=0;
+        }
+        
+    }
+};
+
+Q3.Sort Colors (Leetcode - 75)
+
+class Solution {
+public:
+    void sortColors(vector<int>& nums) {
+
+        int count0 = 0, count1 = 0, count2 = 0;
+        int n = nums.size();
+
+        for(int i = 0; i < n; i++){
+            if(nums[i] == 0) count0++;
+            else if(nums[i] == 1) count1++;
+            else count2++;
+        }
+
+        int index = 0;
+       
+        for(int i = 0; i < count0; i++){
+            nums[index++] = 0;
+        }
+
+        for(int i = 0; i < count1; i++){
+            nums[index++] = 1;
+        }
+       
+        for(int i = 0; i < count2; i++){
+            nums[index++] = 2;
+        }
+    }
+};
+
+
+
+
+
