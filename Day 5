@@ -1,0 +1,39 @@
+Q1. Maximum Subarray (Leetcode - 53)
+
+class Solution {
+public:
+    int maxSubArray(vector<int>& nums) {
+        int max=INT_MIN;
+        int cs=0;
+        for(int x: nums){
+            cs+=x;
+            if(max<cs) max=cs;
+            if(cs<0) cs=0;
+        }     
+        return max;
+    }
+};
+
+Q2.Minimum Size Subarray Sum (Leetcode - 209)
+
+class Solution {
+public:
+    int minSubArrayLen(int target, vector<int>& nums) {
+        int n=nums.size();
+        int l=0;
+        int sum=0;
+        int res=INT_MAX;
+
+        for(int r=0;r<n;r++){
+            sum+=nums[r];
+
+            while(sum>=target){
+                 res = min(res,r-l+1);
+                 sum -= nums[l];
+                 l++;
+            }
+        }
+
+        return (res == INT_MAX)?0:res;
+    }
+};
