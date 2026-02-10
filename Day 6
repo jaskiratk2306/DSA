@@ -1,0 +1,75 @@
+Q1. Rotate Non-Negative Elements (Leetcode - 3819)
+
+class Solution {
+public:
+    vector<int> rotateElements(vector<int>& nums, int k) {
+        vector<int> nonNeg;
+        
+       
+        for (int x : nums) {
+            if (x >= 0)
+                nonNeg.push_back(x);
+        }
+        
+        int m = nonNeg.size();
+        if (m == 0) return nums;   
+        
+        
+        k = k % m;
+        
+       
+        vector<int> rotated(m);
+        for (int i = 0; i < m; i++) {
+            rotated[i] = nonNeg[(i + k) % m];
+        }
+        
+        
+        int idx = 0;
+        for (int i = 0; i < nums.size(); i++) {
+            if (nums[i] >= 0) {
+                nums[i] = rotated[idx++];
+            }
+        }
+        
+        return nums;
+    }
+};
+
+Q2.Maximum Sum Circular Subarray (Leetcode - 918)
+
+class Solution {
+public:
+    int maxSubarraySumCircular(vector<int>& nums) {
+        int totalsum=accumulate(nums.begin(),nums.end(),0);
+        int mini=INT_MAX;
+        int maxi=INT_MIN;
+
+        int summax=0;
+        int summin=0;
+
+        int n=nums.size();
+        for(int i=0;i<n;i++){
+            if(summax<0) summax=0;
+            if(summin>0) summin=0;
+
+            summax+=nums[i];
+            summin+=nums[i];
+            mini=min(mini,summin);
+            maxi=max(maxi,summax);
+        }
+        if(maxi<0) return maxi;
+        return max(maxi,(totalsum-mini));
+    }
+};
+
+Q3.Find Smallest letter greater than target (Leetcode - 744)
+
+class Solution {
+public:
+    char nextGreatestLetter(vector<char>& letters, char target) {
+        const int size = letters.size();
+        for(int i = 0; i < size; ++i)
+            if (letters[i] > target) return letters[i];
+        return letters[0];
+    }
+};
