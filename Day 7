@@ -1,0 +1,80 @@
+Q1.Divide an array into subarrays with minimu cost I (Leetcode - 3010)
+
+class Solution {
+public:
+    int minimumCost(vector<int>& A) {
+        int a = 51, b = 51;
+
+        for (int i = 1; i < A.size(); i++) {
+            if (A[i] < a) {
+                b = a;
+                a = A[i];
+            } else if (A[i] < b)
+                b = A[i];
+
+            if (a == 1 && b == 1) break;
+        }
+
+        return A[0] + a + b;
+    }
+};
+
+Q2.Valid Anagram (Leetcode - 242)
+
+class Solution {
+public:
+    bool isAnagram(string s, string t) {
+
+    unordered_map<char,int>mp;
+    unordered_map<char,int>np;
+
+    int n1=s.length();
+    int n2=t.length();
+
+    if(n1!=n2) return false;
+
+    for(char it:s){
+        mp[it]++;
+    }
+
+    for(char it:t){
+        np[it]++;
+    }
+
+    for(auto it:mp){
+        if(it.second != np[it.first]){
+            return false;
+        }
+    }
+
+    return true;
+        
+    }
+};
+
+Q3.Isomorphic Strings (Leetcode - 205)
+
+class Solution {
+public:
+    bool isIsomorphic(string s, string t) {
+    
+    unordered_map<char,char> mp;
+    unordered_map<char,char> np;
+    int n=s.length();
+        
+    for(int i=0;i<n;i++){
+         if (mp.count(s[i]) && mp[s[i]] != t[i])
+                return false;
+
+        if (np.count(t[i]) && np[t[i]] != s[i])
+                return false;
+
+            mp[s[i]] = t[i];
+            np[t[i]] = s[i];
+    }
+
+    return true;
+
+    
+    }
+};
