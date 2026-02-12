@@ -1,0 +1,42 @@
+Q1. Is Subsequence (Leetcode - 392)
+
+class Solution {
+public:
+    bool isSubsequence(string s, string t) {
+    int n = s.length();
+    int m = t.length();
+
+    int l=0,r=0;
+
+    while(l<n && r<m){
+        if(s[l] == t[r]){
+            l++;
+        }
+        r++;
+    }
+    
+    return l == s.length();
+
+    }
+};
+
+Q2. First Unique Character in a String (Leetcode - 387)
+
+class Solution {
+public:
+    int firstUniqChar(string s) {
+        unordered_map<char,int> freq;
+
+        for(char c:s){
+            freq[c]++;
+        }
+
+        for(int i=0;i<s.size();i++){
+            if(freq[s[i]] == 1){
+                return i;
+            }
+        }
+
+        return -1;
+    }
+};
