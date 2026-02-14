@@ -1,0 +1,64 @@
+Q1.Largest Odd Number in String (Leetcode - 1903)
+
+class Solution {
+public:
+    string largestOddNumber(string num) {
+        
+       for(int i=num.size()-1;i>=0;i--){
+          int digit=num[i]-'0';
+          if(digit % 2 == 1){
+            return num.substr(0,i+1);
+          }
+       }
+
+      return "";   
+    }
+};
+
+Q2.Trionic Array I (Leetcode - 3637)
+
+class Solution {
+public:
+    bool isTrionic(vector<int>& nums) {
+        int n=nums.size() , i=0;
+
+        while(i + 1 < n && nums[i] < nums[i+1]) i++;
+        if(i==0 || i==n-1) return false;
+
+        int p=i;
+        while(i + 1 < n && nums[i] > nums[i+1]) i++;
+        if(i==p || i== n-1) return false;
+
+        while(i + 1 < n && nums[i]<nums[i+1])  i++;
+        return i == n-1;
+    }
+};
+
+Q3.Sort Characters By Frequency (Leetcode - 451)
+
+class Solution {
+public:
+    string frequencySort(string s) {
+
+        unordered_map<char,int> mp;
+        for(char c : s){
+            mp[c]++;
+        }
+
+        map<int, vector<char>> freq;
+        for(auto it : mp){
+            freq[it.second].push_back(it.first);
+        }
+
+        string ans = "";
+
+       
+        for(auto it = freq.rbegin(); it != freq.rend(); ++it){
+            for(char ch : it->second){
+                ans.append(it->first, ch);
+            }
+        }
+        return ans;
+    }
+};
+
