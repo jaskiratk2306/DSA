@@ -1,0 +1,50 @@
+Q1. Fibonacci Number (Leetcode - 509)
+
+class Solution {
+public:
+    int fib(int n) {
+        if(n==0) return 0;
+        if(n==1) return 1;
+
+        return fib(n-1)+fib(n-2);
+        
+    }
+};
+
+Q2.Transformed Array (Leetcode - 3379)
+
+class Solution {
+public:
+    static vector<int> constructTransformedArray(vector<int>& nums) {
+        const int n=nums.size();
+        vector<int> ans(n);
+        for (int i=0; i<n; i++){
+            int j=(i+nums[i])%n;  
+            ans[i]=nums[j+(-(j<0)&n)];
+        }
+        return ans;
+    
+    
+    }
+};
+
+Q3.Climbing Stairs (Leetcode - 70)
+
+class Solution {
+public:
+    int climbStairs(int n) {
+        if(n==0 || n==1){
+            return 1;
+        }
+
+        int dp[n+1];
+        dp[0] = 1;
+        dp[1] = 1;
+
+        for(int i=2;i<=n;i++){
+            dp[i]=dp[i-1]+dp[i-2];
+        }
+
+        return dp[n];  
+    }
+};
