@@ -1,0 +1,86 @@
+Q1.Reverse Linked List (Leetcode - 206)
+
+class Solution {
+public:
+    ListNode* reverseList(ListNode* head) {
+        
+        ListNode* prev = nullptr;
+        ListNode* curr = head;
+      
+        while(curr!= nullptr){
+            ListNode* next = nullptr;
+            next=curr->next;
+            curr->next=prev;
+            prev=curr;
+            curr=next;
+        }
+        return prev;
+    }
+};
+
+Q2.Palindrome Linked List (Leetcode - 234)
+
+class Solution {
+public:
+    bool isPalindrome(ListNode* head) {
+        
+        if(head == NULL || head->next == NULL){
+            return true;
+        }
+
+        ListNode* slow = head;
+        ListNode* fast = head;
+
+        while(fast && fast->next){
+            slow=slow->next;
+            fast=fast->next->next;
+        }
+
+        
+        ListNode* prev = nullptr;
+
+        while(slow){
+            ListNode* next = nullptr;
+            next = slow -> next;
+            slow->next = prev;
+            prev = slow;
+            slow = next;
+        }
+
+        ListNode* p1 = head;
+        ListNode* p2 = prev;
+
+        while(p1 && p2){
+            if(p1->val != p2 ->val){
+                return false;
+            }
+            p1 = p1->next;
+            p2 = p2->next;
+        }
+        
+        return true;
+    }
+};
+
+Q3.Remove Duplicates from sorted List (leetcode - 83)
+
+class Solution {
+public:
+    ListNode* deleteDuplicates(ListNode* head) {
+
+        ListNode* temp = head;
+
+        while(head && head->next){
+          if(head->val == head->next->val){
+            head->next=head->next->next;
+          }
+          else{
+            head=head->next;
+          }
+        }
+        
+        return temp;
+    }
+};
+
+
