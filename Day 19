@@ -1,0 +1,67 @@
+Q1.Reverse Bits (Leetcode - 190)
+
+class Solution {
+public:
+    int reverseBits(int n) {
+        int r = 0;
+        for(int i = 0; i < 32; i++){
+            r = (r << 1) | ((n>>i) & 1);
+        }
+        return r;
+    }
+};
+
+
+Q2.Longest Substring without repeating characters (Leetcode - 3)
+
+class Solution {
+public:
+    int lengthOfLongestSubstring(string s) {
+        int left = 0;
+        int maxLen = 0;
+        unordered_set<char> st;
+
+        for(int right = 0; right < s.length(); right++){
+            while(st.count(s[right])){
+                st.erase(s[left]);
+                left++;
+            }
+            st.insert(s[right]);
+            maxLen = max(maxLen,right-left+1);
+        }
+        return maxLen;
+    }
+};
+
+Q3.Valid Parentheses (Leetcode - 20)
+
+class Solution {
+public:
+    bool isValid(string s) {
+        stack<char> st;
+
+        for(char ch : s){
+
+            if(ch == '(' || ch == '{' || ch == '['){
+                st.push(ch);
+            }
+            else{
+                if(st.empty()) return false;
+
+                char top = st.top();
+
+                if((top == '(' && ch == ')') ||
+                   (top == '[' && ch == ']') ||
+                   (top == '{' && ch == '}')){
+                    st.pop();
+                }
+                else{
+                    return false;   // 
+                }
+            }
+        }
+
+        return st.empty();
+    }
+};
+
