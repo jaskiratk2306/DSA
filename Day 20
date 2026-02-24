@@ -1,0 +1,166 @@
+Q1.Pythagorean Distance Nodes in a Tree (Leetcode - 3820)
+
+class Solution {
+public:
+    vector<int> bfs(int node, vector<vector<int>>& adj, int& n) {
+        queue<int> q;
+        q.push(node);
+        int len = 1;
+        vector<int> res(n, 0);
+        vector<bool> vis(n, 0);
+        vis[node] = 1;
+
+        while (!q.empty()) {
+            int size = q.size();
+            for (int i = 0; i < size; i++) {
+                int num = q.front();
+                q.pop();
+                for (auto& neigh : adj[num]) {
+                    if (!vis[neigh]) {
+                        q.push(neigh);
+                        res[neigh] = len;
+                        vis[neigh] = 1;
+                    }
+                }
+            }
+            len++;
+        }
+        return res;
+    }
+
+    int specialNodes(int n, vector<vector<int>>& edges, int x, int y, int z) {
+        vector<vector<int>> adj(n);
+        for (auto& e : edges) {
+            adj[e[0]].push_back(e[1]);
+            adj[e[1]].push_back(e[0]);
+        }
+
+        vector<int> xDist = bfs(x, adj, n);
+        vector<int> yDist = bfs(y, adj, n);
+        vector<int> zDist = bfs(z, adj, n);
+
+        int count = 0;
+        for (int i = 0; i < n; i++) {
+            int a = xDist[i];
+            int b = yDist[i];
+            int c = zDist[i];
+
+            if (a > b) swap(a, b);
+            if (b > c) swap(b, c);
+            if (a > b) swap(a, b);
+
+            if ((long long)a * a + (long long)b * b == (long long)c * c) {
+                count++;
+            }
+        }
+
+        return count;
+    }
+};
+
+Q2.Implement Stack Using Queues (Leetcode - 225)
+
+class MyStack {
+public:
+
+    queue<int> q1;  //Primary queue
+    queue<int> q2;
+
+    MyStack() {}
+    
+    void push(int x) {
+       q1.push(x);
+    }
+    
+    int pop() {
+       
+       while(q1.size() > 1){
+        int temp = q1.front();
+        q1.pop();
+        q2.push(temp);
+       }
+
+       int popped = q1.front();
+       q1.pop();
+       swap(q1,q2);
+       return popped;
+    }
+    
+    int top() {
+    
+    //Move all the elements except last one to q2
+      while(q1.size() > 1){
+        int temp = q1.front();
+        q1.pop();
+        q2.push(temp);
+       }
+      
+    //Then return the last element from q1 after moving it
+      int top = q1.front();
+      q1.pop();
+      q2.push(top);
+      swap(q1,q2);
+      return top;
+
+    }
+    
+    bool empty() {
+        return q1.empty();
+        
+    }
+};
+
+Q3.Next Greater Element I (Leetcode - 496)
+
+class Solution {
+public:
+  vector<int> nextGreaterElement(vector<int>& nums1, vector<int>& nums2) {
+    
+    unordered_map<int, int> mp;
+    stack<int> st;
+
+    for(int i=nums2.size()-1; i>=0; i--){
+      while(!st.empty() && st.top() < nums2[i]){
+        st.pop();
+      }
+      if(st.empty() || st.top() < nums2[i]) mp[nums2[i]] = -1;
+      else mp[nums2[i]] = st.top();
+      st.push(nums2[i]);
+    }
+
+    vector<int> res;
+    for(int i=0; i<nums1.size(); i++){
+      res.push_back(mp[nums1[i]]);
+    }
+
+
+    return res;
+  }
+};
+
+Q4. Next Greater Element II (Leetcode - 503)
+
+class Solution {
+public:
+    vector<int> nextGreaterElements(vector<int>& nums) {
+        stack<int> st;
+        int n = nums.size();
+
+        for(int i=n-2;i>=0;i--){
+            st.push(nums[i]);
+        }
+        
+        vector<int> ans(n,-1);
+        for(int i=n-1; i>=0; i--){
+            while(!st.empty() && st.top()<=nums[i]){
+                st.pop();
+            }
+
+            if(!st.empty()) ans[i] = st.top();
+            st.push(nums[i]);
+        }
+       return ans;
+    }
+};
+
+
