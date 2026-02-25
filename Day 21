@@ -1,0 +1,130 @@
+Q1.Binary Watch (Leetcode - 401)
+
+class Solution {
+public:
+    int countSetBits(int x) {
+        int count = 0;
+        while (x) {
+            x &= (x - 1);
+            count++;
+        }
+        return count;
+    }
+
+    vector<string> readBinaryWatch(int turnedOn) {
+        vector<string> res;
+
+        for (int h = 0; h < 12; h++) {
+            for (int m = 0; m < 60; m++) {
+                if (countSetBits(h) + countSetBits(m) == turnedOn) {
+                    string time = to_string(h) + ":";
+                    if (m < 10) time += "0";
+                    time += to_string(m);
+                    res.push_back(time);
+                }
+            }
+        }
+        return res;
+    }
+};
+
+Q2.Remove Duplicate letters (Leetcode - 316)
+
+class Solution {
+public:
+    string removeDuplicateLetters(string s) {
+
+        stack<char> st;
+        vector<int> freq(26,0);
+        vector<bool> visited(26,false);
+        
+        for(char c:s){
+            freq[c - 'a']++;
+        }
+
+        for(char c:s){
+            freq[c - 'a']--;
+
+            if(visited[c - 'a']){
+                continue;
+            }
+
+         while(!st.empty() && 
+               c < st.top() &&
+               freq[st.top() - 'a'] > 0)
+
+            {
+                visited[st.top() - 'a'] = false;
+                  st.pop();
+            }
+
+            st.push(c);
+            visited[c - 'a'] = true;
+        }
+
+        string result = "";
+        while(!st.empty()){
+            result = st.top() + result;
+            st.pop();
+        }
+
+        return result;
+        
+    }
+};
+
+Q3.Largest Rectangle in Histogram (Leetcode - 84)
+
+class Solution {
+public:
+    int largestRectangleArea(vector<int>& heights) {
+        
+        int n = heights.size();
+        
+        // Next Smaller Element
+        vector<int> next(n, n);
+        stack<pair<int,int>> st;
+
+        for(int i = n - 1; i >= 0; i--){
+            
+            while(!st.empty() && st.top().first >= heights[i]){
+                st.pop();
+            }
+
+            if(!st.empty()){
+                next[i] = st.top().second;
+            }
+
+            st.push({heights[i], i});
+        }
+
+        // Previous Smaller Element
+        vector<int> prev(n, -1);
+        stack<pair<int,int>> s;
+
+        for(int i = 0; i < n; i++){
+            
+            while(!s.empty() && s.top().first >= heights[i]){
+                s.pop();
+            }
+
+            if(!s.empty()){
+                prev[i] = s.top().second;
+            }
+
+            s.push({heights[i], i});
+        }
+
+        int res = 0;
+
+        for(int i = 0; i < n; i++){
+            int width = next[i] - prev[i] - 1;
+            int area = heights[i] * width;
+            res = max(res, area);
+        }
+
+        return res;
+    }
+};
+
+
