@@ -1,0 +1,98 @@
+Q1.Count Binary Substrings (Leetcode - 696)
+
+class Solution {
+public:
+    int countBinarySubstrings(string s) {
+        int res = 0, prev = 0, strk = 1;
+
+        for (int i = 1; i < s.size(); i++) {
+            if (s[i] == s[i - 1]) strk++;
+            else {
+                prev = strk;
+                strk = 1;
+            }
+            if (strk <= prev) res++;
+        }
+        return res;
+    }
+};
+
+Q2.Binary Tree Inorder Traversal (Leetcode - 94)
+
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+class Solution {
+public:
+    
+    void inorder(TreeNode* root,vector<int> &vt){
+        
+        if(root == nullptr) return;
+
+        
+        inorder(root->left,vt);
+        vt.push_back(root->val);
+        inorder(root->right,vt);
+    }
+
+
+    vector<int> inorderTraversal(TreeNode* root) {
+         
+         vector<int> ans;
+         inorder(root,ans);
+         return ans;
+        
+    }
+};
+
+Q3.Binary Tree Preorder Traversal (Leetcode - 144)
+
+class Solution {
+public: 
+    
+    void preorder(TreeNode* root,vector<int> &vt){
+        if(!root) return;
+
+       vt.push_back(root->val);
+       preorder(root->left,vt);
+       preorder(root->right,vt);
+
+    }
+
+    vector<int> preorderTraversal(TreeNode* root) {
+
+    vector<int> ans;
+    preorder(root,ans);
+    return ans; 
+    }
+};
+
+Q4.Binary Tree Postorder Traversal (Leetcode - 145)
+
+class Solution {
+public:
+    
+    void postorder(TreeNode* root,vector<int> &vt){
+        if(!root) return;
+
+        postorder(root->left,vt);
+        postorder(root->right,vt);
+        vt.push_back(root->val);
+    }
+
+    vector<int> postorderTraversal(TreeNode* root) {
+        vector<int> ans;
+
+        postorder(root,ans);
+        return ans;
+
+    }
+};
